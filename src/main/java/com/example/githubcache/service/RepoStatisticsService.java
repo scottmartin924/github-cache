@@ -1,73 +1,48 @@
 package com.example.githubcache.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.example.githubcache.representation.RepoRepresentation;
 
 import java.util.List;
 
 /**
  * RepoStatisticsService base class
  */
-public abstract class RepoStatisticsService {
+public interface RepoStatisticsService {
 
-    protected static final String ENDPOINT_NAME = "repos";
-
-    // FIXME Not sure I like this...maybe put it in an enum or something...not my favorite
-    private static final String FORKED_FIELD = "";
-    private static final String LAST_UPDATED_FIELD = "";
-    private static final String MOST_STARRED_FIELD = "";
-    private static final String MOST_WATCHED_FIELD = "";
-    private static final String MOST_ISSUES_FIELD = "";
-
-    /**
-     * Find top n values for a field for the available list of repos
-     * @param field the fields to find the top n values for
-     * @param n the number of repos to find
-     * @return list of the top n repos for the field
-     */
-    public abstract List<JsonNode> findTopN(String field, int n);
+    // FIXME If can refactor should I make all these default methods??
 
     /**
      * Find most top n forked repositories
      * @param n number of repos to find
      * @return list of repos as json objects
      */
-    public List<JsonNode> findMostForked(int n) {
-        return findTopN(FORKED_FIELD, n);
-    }
+    List<RepoRepresentation> findMostForked(int n);
 
     /**
      * Find top n last updated
      * @param n number of repos
      * @return list of repos as json objects
      */
-    public List<JsonNode> findTopLastUpdated(int n) {
-        return findTopN(LAST_UPDATED_FIELD, n);
-    }
+    List<RepoRepresentation> findTopLastUpdated(int n);
 
     /**
      * Find top n repos with most issues
      * @param n number of repos
      * @return list of repos as json objects
      */
-    public List<JsonNode> findMostIssues(int n) {
-        return findTopN(MOST_ISSUES_FIELD, n);
-    }
+    List<RepoRepresentation> findMostIssues(int n);
 
     /**
      * Find top n most starred repos
      * @param n number of repos
      * @return list of repos as json objects
      */
-    public List<JsonNode> findMostStarred(int n) {
-        return findTopN(MOST_STARRED_FIELD, n);
-    }
+    List<RepoRepresentation> findMostStarred(int n);
 
     /**
      * Find top n most watched repos
      * @param n number of repos
      * @return list of repos as json objects
      */
-    public List<JsonNode> findMostWatched(int n) {
-        return findTopN(MOST_WATCHED_FIELD, n);
-    }
+    List<RepoRepresentation> findMostWatched(int n);
 }

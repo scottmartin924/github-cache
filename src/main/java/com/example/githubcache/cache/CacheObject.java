@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.Instant;
+import java.util.HashMap;
 
 @Builder
 @Getter
@@ -13,7 +14,7 @@ import java.time.Instant;
 public class CacheObject {
     //FIXME Fail count?
     // FIXME Not sure we actually need a cacheobjectstatus anymore
-    private CacheObjectStatus status;
     private String value;
     private Instant lastUpdated;
+    private Instant evictionTime;
 }

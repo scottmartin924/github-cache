@@ -20,6 +20,8 @@ public class HealthController {
         return ResponseEntity.ok().build();
     }
 
+
+    // FIXME Get rid of this???
     /**
      * Detailed health check showing the last time each configured
      * github api was retrieved and the number of failures or if

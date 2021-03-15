@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
  * Mapper for converting to cache objects using jackson. Converts all objects
  * to JSON
  */
-public class JacksonCacheMapper implements CacheMapper<String > {
+public class JacksonCacheMapper implements CacheMapper {
     private static final Logger LOG = LoggerFactory.getLogger(JacksonCacheMapper.class);
 
     private final ObjectMapper objectMapper;

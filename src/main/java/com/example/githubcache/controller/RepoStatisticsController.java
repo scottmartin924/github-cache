@@ -1,10 +1,15 @@
 package com.example.githubcache.controller;
 
+import com.example.githubcache.representation.RepoRepresentation;
+import com.example.githubcache.service.RepoStatisticsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Controller for retrieving data on GitHub repos for a
@@ -15,29 +20,37 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/view/top/{N}")
 @RestController
 public class RepoStatisticsController {
+    private final RepoStatisticsService service;
+
+    public RepoStatisticsController(@Autowired RepoStatisticsService service) {
+        this.service = service;
+    }
+
+    // FIXME Add HATEOAS links???
+
 
     @GetMapping("/forks")
     public ResponseEntity<?> getTopForks(@PathVariable("N") Integer topN) {
-        return null;
+        return ResponseEntity.ok(this.service.findMostForked(topN));
     }
 
     @GetMapping("/last_updated")
     public ResponseEntity<?> getTopLastUpdated(@PathVariable("N") Integer topN) {
-        return null;
+        return ResponseEntity.ok(this.service.findTopLastUpdated(topN));
     }
 
     @GetMapping("/open_issues")
     public ResponseEntity<?> getTopOpenIssues(@PathVariable("N") Integer topN) {
-        return null;
+        return ResponseEntity.ok(this.service.findMostIssues(topN));
     }
 
     @GetMapping("/stars")
     public ResponseEntity<?> getTopStars(@PathVariable("N") Integer topN) {
-        return null;
+        return ResponseEntity.ok(this.service.findMostStarred(topN));
     }
 
     @GetMapping("/watchers")
     public ResponseEntity<?> getTopWatchers(@PathVariable("N") Integer topN) {
-        return null;
+        return ResponseEntity.ok(this.service.findMostForked(topN));
     }
 }

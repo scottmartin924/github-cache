@@ -1,4 +1,4 @@
-package com.example.githubcache.cache;
+package com.example.githubcache.trash;
 
 public enum CacheObjectStatus {
     UPDATED,

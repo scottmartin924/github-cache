@@ -10,13 +10,13 @@ import java.util.Map;
 @Configuration
 @ConfigurationProperties(prefix = "application.remote")
 @Data
-public class RemoteConfiguration {
+public class ApplicationConfiguration {
     private String githubApiToken;
     private String baseUrl;
-    private int refreshRate;
     private int evictionTime;
     private String paginationHeader;
-    private final RemoteConfiguration.AuthorizationConfig authorization = new RemoteConfiguration.AuthorizationConfig();
+    private String organization;
+    private final ApplicationConfiguration.AuthorizationConfig authorization = new ApplicationConfiguration.AuthorizationConfig();
     private Map<String, String> cachedEndpoints = new HashMap<>();
 
     @Data

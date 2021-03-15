@@ -1,42 +1,87 @@
 package com.example.githubcache.service;
 
 import com.example.githubcache.cache.ResponseCache;
-import com.example.githubcache.client.CacheAwareWebClient;
-import com.example.githubcache.config.RemoteConfiguration;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.example.githubcache.client.GithubClient;
+import com.example.githubcache.config.Endpoints;
+import com.example.githubcache.representation.RepoRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class RepoStatisticsServiceImpl extends RepoStatisticsService {
+public class RepoStatisticsServiceImpl implements RepoStatisticsService {
     private final ResponseCache cache;
-    private final String endpoint;
-    private final CacheAwareWebClient client;
+    private final GithubClient updateTasks;
 
-    // FIXME If we have to take in the entire configuration then build this as a bean not in component scan
     public RepoStatisticsServiceImpl(@Autowired ResponseCache cache,
-                                     @Autowired CacheAwareWebClient client,
-                                     @Autowired RemoteConfiguration remoteConfiguration) {
+                                     @Autowired GithubClient tasks) {
         this.cache = cache;
-        this.client = client;
-        final String endpoint = remoteConfiguration.getCachedEndpoints().get(RepoStatisticsService.ENDPOINT_NAME);
-        if(endpoint == null) {
-            throw new RuntimeException(String.format("View %s not found in the configuration.", RepoStatisticsService.ENDPOINT_NAME));
-        }
-        this.endpoint = endpoint;
+        this.updateTasks = tasks;
     }
 
     @Override
-    public List<JsonNode> findTopN(String field, int n) {
-        JsonNode repos = cache.retrieveElement(ENDPOINT_NAME)
-                                .orElseGet(() -> {
-                                    ResponseEntity<JsonNode> entity = client.retrieveRemoteResource(endpoint);
-                                    return entity.getBody();
-                                });
+    public List<RepoRepresentation> findMostForked(int n) {
+        return findTopN(n, Comparator.comparingInt(RepoRepresentation::getForksCount));
+    }
 
-        return null;
+    @Override
+    public List<RepoRepresentation> findTopLastUpdated(int n) {
+        // NOTE: It's not clear to me if this should be updated_at or pushed_at, we'll do updated_at for now, but
+        // to me pushed_at seems more useful
+        return findTopN(n, Comparator.comparing(RepoRepresentation::getUpdatedAt));
+    }
+
+    @Override
+    public List<RepoRepresentation> findMostIssues(int n) {
+        return findTopN(n, Comparator.comparing(RepoRepresentation::getOpenIssuesCount));
+    }
+
+    @Override
+    public List<RepoRepresentation> findMostStarred(int n) {
+        return findTopN(n, Comparator.comparing(RepoRepresentation::getStargazersCount));
+    }
+
+    // FIXME This number is wrong...no longer comes back from this api
+    @Override
+    public List<RepoRepresentation> findMostWatched(int n) {
+        return findTopN(n, Comparator.comparing(RepoRepresentation::getWatchers));
+    }
+
+    /**
+     * Find top n entries of list
+     * @param n the number of entries to return
+     * @param comparator the comparison to sort
+     * @return top n values based on comparator
+     */
+    private List<RepoRepresentation> findTopN(int n, Comparator<RepoRepresentation> comparator) {
+        return getRepos().stream()
+                .sorted(comparator)
+                .limit(n)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Get repos from cache
+     * @return
+     */
+    private List<RepoRepresentation> getRepos() {
+        Optional<RepoRepresentation[]> representations = getReposFromCache();
+        // FIXME Terrible use of optional here (maybe not have it be optional if this is the type of shit I'm using it for)
+        // FIXME Refactor...this is rough
+        if (representations.isEmpty()) {
+            this.updateTasks.updateReposRoute();
+            // Cache should be updated since repos just pull
+            representations = getReposFromCache();
+        }
+        return Arrays.asList(representations.get());
+    }
+
+    private Optional<RepoRepresentation[]> getReposFromCache() {
+        return cache.retrieveElement(Endpoints.REPOS.getKey(), RepoRepresentation[].class);
     }
 }

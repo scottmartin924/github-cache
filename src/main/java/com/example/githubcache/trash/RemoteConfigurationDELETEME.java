@@ -1,4 +1,4 @@
-package com.example.githubcache.config;
+package com.example.githubcache.trash;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

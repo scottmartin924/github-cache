@@ -6,13 +6,13 @@ import java.util.Optional;
  * Interface for a response cache.
  * For now only String key/T type pairs
  */
-public interface ResponseCache<T> {
+public interface ResponseCache {
 
     /**
      * Get the cachemapper for the cache
      * @return the cachemapper if it exists
      */
-    CacheMapper<T> getMapper();
+    CacheMapper getMapper();
 
     /**
      * Add element to response cache
@@ -29,8 +29,4 @@ public interface ResponseCache<T> {
      * in cache and not expired. Else empty optional
      */
     <S> Optional<S> retrieveElement(String key, Class<S> type);
-
-
-    // FIXME Remove this...just for debugging
-    void printCache();
 }

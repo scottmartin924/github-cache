@@ -1,13 +1,18 @@
 package com.example.githubcache.config;
 
-import com.example.githubcache.cache.LocalCache;
+import com.example.githubcache.cache.JacksonCacheMapper;
+import com.example.githubcache.cache.RedisCache;
 import com.example.githubcache.cache.ResponseCache;
-import com.example.githubcache.client.CacheAwareWebClient;
+import com.example.githubcache.client.GithubClient;
 import com.example.githubcache.client.PaginationHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.web.reactive.function.client.WebClient;
 import redis.clients.jedis.Jedis;
 
 import java.util.HashMap;
@@ -21,40 +26,51 @@ public class BeanConfiguration {
     final Pattern VARIABLE_ITERP_PATTERN = Pattern.compile(".*(\\{.*?\\})");
 
     /**
-     * Configure response cache
-     * @param configuration the app configuration needed to get configured eviction time
-     * @return cache
+     * Create jackson object mapper
+     * @return a configured object mapper
      */
     @Bean
-    public ResponseCache cache(@Autowired RemoteConfiguration configuration) {
-        return new LocalCache(configuration.getEvictionTime());
+    public ObjectMapper mapper() {
+        ObjectMapper mapper = new ObjectMapper()
+                .registerModule(new Jdk8Module())
+                .registerModule(new JavaTimeModule());
+        return mapper;
     }
 
-    /**
-     * Construct cache aware webclient bean
-     * @param configuration the app configuration to setup webclient
-     * @param env the runtime environment to pull environment variables
-     * @param cache the response cache to use with the client
-     * @return a cache aware web client bean
-     */
     @Bean
-    public CacheAwareWebClient cacheAwareWebClient(@Autowired RemoteConfiguration configuration,
-                                                   @Autowired Environment env,
-                                                   @Autowired ResponseCache cache) {
+    public ResponseCache cache(@Autowired RedisConfiguration configuration,
+                               @Autowired ApplicationConfiguration applicationConfiguration,
+                               @Autowired ObjectMapper mapper) {
+        Jedis jedis = new Jedis(configuration.getHost());
+        JacksonCacheMapper jacksonCacheMapper = new JacksonCacheMapper(mapper);
+        return new RedisCache(jedis, applicationConfiguration.getEvictionTime(), jacksonCacheMapper);
+    }
+
+    @Bean
+    public WebClient cacheAwareWebClient(@Autowired ApplicationConfiguration configuration,
+                                         @Autowired Environment env) {
         final String baseUrl = configuration.getBaseUrl();
-        final RemoteConfiguration.AuthorizationConfig authorizationConfig = configuration.getAuthorization();
+        final ApplicationConfiguration.AuthorizationConfig authorizationConfig = configuration.getAuthorization();
         Map<String, String> headers = new HashMap<>();
         if (authorizationConfig != null) {
             final String interpolatedAuthString = interpolateAuthorizationString(authorizationConfig.getValue(), env);
             headers.put(authorizationConfig.getHeader(), interpolatedAuthString);
         }
         final PaginationHandler paginationHandler = new PaginationHandler(configuration.getPaginationHeader());
-        return new CacheAwareWebClient(cache, paginationHandler, baseUrl, headers);
+        return WebClient.builder()
+                        .baseUrl(baseUrl)
+                        .defaultHeaders(hd -> {
+                            headers.forEach((key, value) -> hd.set(key, value));
+                        })
+                        .build();
     }
 
+
     @Bean
-    public void test() {
-        Jedis jd = new Jedis("localhost");
+    public GithubClient cacheUpdateTasks(@Autowired WebClient client,
+                                         @Autowired ResponseCache cache,
+                                         @Autowired ApplicationConfiguration configuration) {
+        return new GithubClient(client, cache, configuration.getOrganization(), configuration.getPaginationHeader());
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.example.githubcache.error;
+package com.example.githubcache.trash;
 
 public class ConfigurationException {
 }

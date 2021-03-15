@@ -12,8 +12,9 @@ public class PaginationHandler {
     public PaginationHandler(String headerName) {
         this.paginationHeaderName = headerName;
     }
+    // FIXME NOt very good code here
 
-    public Optional<String> determinePageHeader(HttpHeaders headers) {
+    public Optional<String> nextPageUrl(HttpHeaders headers) {
         final Object paginationHeader = headers.get(paginationHeaderName);
         // If no link header then don't need to paginate
         if (paginationHeader == null) {
@@ -23,7 +24,9 @@ public class PaginationHandler {
         return parseNextLink(paginationHeader.toString());
     }
 
-    public Optional<String> parseNextLink(String linkHeader) {
+    private Optional<String> parseNextLink(String linkHeader) {
+        // FIXME Hideous
+
         // Could do this with regex but I'm likely to mess it up
         String nextString = "rel=\"next\"";
         String[] links = linkHeader.split(",");
@@ -32,11 +35,8 @@ public class PaginationHandler {
                 .map(x -> {
                     int firstIdx = x.indexOf("<");
                     int lastIdx = x.indexOf(">");
-                    return x.substring(firstIdx, lastIdx);
+                    return x.substring(firstIdx + 1, lastIdx);
                 })
                 .findFirst();
     }
-
-
-
 }

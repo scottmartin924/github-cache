@@ -1,9 +1,12 @@
-package com.example.githubcache.representation.REMOVEME;
+package com.example.githubcache.representation;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 import java.util.Date;
 
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @Data
 public class OrgRepresentation {
     private String login;
