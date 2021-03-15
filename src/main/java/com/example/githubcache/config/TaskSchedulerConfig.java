@@ -10,12 +10,13 @@ public class TaskSchedulerConfig {
 
     /**
      * Create task scheduler
-     * @return
+     *
+     * @return configured task scheduled
      */
     @Bean
     public TaskScheduler scheduler() {
-        // FIXME Think more about this configuration probably (pool size 2...needed? 1 will probably do)
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        // NOTE: Could probably get away with a size 1 pool here since it's likely this won't run often, but 2 seems fine
         scheduler.setPoolSize(2);
         scheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
         return scheduler;

@@ -23,10 +23,26 @@ public interface ResponseCache {
 
     /**
      * Retrieve element from cache if it exists and is not expired
-     * @param key the key to retrieve
+     *
+     * @param key  the key to retrieve
      * @param type the type of the object to return
      * @return Optional containing object if found
      * in cache and not expired. Else empty optional
      */
     <S> Optional<S> retrieveElement(String key, Class<S> type);
+
+    /**
+     * Determine data with given key is expired
+     *
+     * @param key the key
+     * @return true if expired else false
+     */
+    boolean isExpired(String key);
+
+    /**
+     * Check if cache responsive
+     *
+     * @return true if cache responding else false
+     */
+    boolean isConnected();
 }

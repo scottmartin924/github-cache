@@ -1,6 +1,6 @@
-package com.example.githubcache.config;
+package com.example.githubcache.config.cache;
 
-import com.example.githubcache.client.GithubClient;
+import com.example.githubcache.client.EndpointUpdateClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Component;
@@ -10,13 +10,12 @@ import java.time.Duration;
 
 @Component
 public class CacheUpdateScheduler {
-
-    private final GithubClient tasks;
-    private final ApplicationConfiguration configuration;
+    private final EndpointUpdateClient tasks;
+    private final CacheConfiguration configuration;
     private final TaskScheduler scheduler;
 
-    public CacheUpdateScheduler(@Autowired GithubClient tasks,
-                                @Autowired ApplicationConfiguration configuration,
+    public CacheUpdateScheduler(@Autowired EndpointUpdateClient tasks,
+                                @Autowired CacheConfiguration configuration,
                                 @Autowired TaskScheduler scheduler) {
         this.tasks = tasks;
         this.configuration = configuration;

@@ -39,6 +39,11 @@
 			<artifactId>jedis</artifactId>
 			<version>3.5.1</version>
 		</dependency>
+		<!-- Swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

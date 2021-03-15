@@ -1,11 +1,10 @@
-package com.example.githubcache.config;
+package com.example.githubcache.config.web;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
- * Task list
+ * Task list of runnables
  */
 public class EndpointTaskList {
     private List<Runnable> tasks;
@@ -15,10 +14,9 @@ public class EndpointTaskList {
     }
 
     /**
-     * Execute task list
-     * @param org
+     * Execute task list of runnables
      */
-    public void executeTaskList(final String org) {
+    public void executeTaskList() {
         tasks.forEach(Runnable::run);
     }
 

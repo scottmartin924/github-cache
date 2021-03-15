@@ -12,21 +12,30 @@ public class PaginationHandler {
     public PaginationHandler(String headerName) {
         this.paginationHeaderName = headerName;
     }
-    // FIXME NOt very good code here
 
-    public Optional<String> nextPageUrl(HttpHeaders headers) {
+    /**
+     * Find url of next page
+     *
+     * @param headers the http headers
+     * @return string with next page url if next page found. Else null
+     */
+    public String nextPageUrl(HttpHeaders headers) {
         final Object paginationHeader = headers.get(paginationHeaderName);
         // If no link header then don't need to paginate
+        // Should be using an optional
         if (paginationHeader == null) {
-            return Optional.empty();
+            return null;
         }
-
-        return parseNextLink(paginationHeader.toString());
+        return parseNextLink(paginationHeader.toString()).orElse(null);
     }
 
+    /**
+     * Parse the next link from string header
+     *
+     * @param linkHeader the header that the links are on
+     * @return string representing the url for the next page
+     */
     private Optional<String> parseNextLink(String linkHeader) {
-        // FIXME Hideous
-
         // Could do this with regex but I'm likely to mess it up
         String nextString = "rel=\"next\"";
         String[] links = linkHeader.split(",");

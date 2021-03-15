@@ -1,4 +1,4 @@
-package com.example.githubcache.config;
+package com.example.githubcache.config.web;
 
 import lombok.Getter;
 

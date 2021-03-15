@@ -1,4 +1,4 @@
-package com.example.githubcache.config;
+package com.example.githubcache.config.web;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,13 +10,13 @@ import java.util.Map;
 @Configuration
 @ConfigurationProperties(prefix = "application.remote")
 @Data
-public class ApplicationConfiguration {
+public class RemoteConfigurationProperties {
     private String githubApiToken;
     private String baseUrl;
     private int evictionTime;
     private String paginationHeader;
     private String organization;
-    private final ApplicationConfiguration.AuthorizationConfig authorization = new ApplicationConfiguration.AuthorizationConfig();
+    private final RemoteConfigurationProperties.AuthorizationConfig authorization = new RemoteConfigurationProperties.AuthorizationConfig();
     private Map<String, String> cachedEndpoints = new HashMap<>();
 
     @Data

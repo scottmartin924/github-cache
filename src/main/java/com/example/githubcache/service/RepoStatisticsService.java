@@ -9,8 +9,6 @@ import java.util.List;
  */
 public interface RepoStatisticsService {
 
-    // FIXME If can refactor should I make all these default methods??
-
     /**
      * Find most top n forked repositories
      * @param n number of repos to find

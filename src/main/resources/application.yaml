@@ -3,29 +3,14 @@ server:
   servlet:
     context-path: /
 application:
-  redis:
-    host: localhost
+  cache:
+    eviction-time: 5
+    redis:
+      host: localhost
   remote:
     base-url: https://api.github.com
-    eviction-time: 500 # Time, in minutes, after which to consider proxied requests in cache invalid
     organization: lightbend
-    cached-endpoints: # FIXME Make org configurable
-      org: /orgs/parse-community
-      members: /orgs/parse-community/members
-      repos: /orgs/parse-community/repos
+    pagination-header: link
     authorization:
       header: Authorization
       value: token {GITHUB-API-TOKEN}
-    pagination-header: link
-
-
-    # FIXME Reimplement once finished easier idea
-    #    navigation-extension: /
-    #    cached-relations:
-    #      -
-    #        relation: organization_url
-    #        children:
-    #          - relation: repos_url
-    #          - relation: members_url
-    #    variables:
-    #      org: parse-community
