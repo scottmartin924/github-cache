@@ -9,22 +9,30 @@ and caches (using a [Redis](https://redis.io/) cache) the GitHub API endpoints:
 All other endpoints from the GitHub API are proxied and once retrieved once cached until evicted.
 
 ## Running the service
-The service requires several dependencies to run:
+The service requires a couple dependencies to run:
 - A [Redis](https://redis.io/) server running on `localhost` and the default port `6379` (this is theoretically configurable, but has only 
 ever been tested with these parameters). 
 During testing I installed and ran Redis using instructions in the [Redis Quickstart](https://redis.io/topics/quickstart). 
 - An evironment variable called `GITHUB_API_TOKEN` containing a (unsurprisingly) GitHub API token. To set this environment
 variable (assuming a Unix system) use `export GITHUB_API_TOKEN={token}`.
-- You will need to have [Maven](https://maven.apache.org/install.html) installed to run service (or to build it then run the jar,
-either way you need Maven).
 
-Once these requirements are met to start the service use:
-- Navigate to the root of the project and run the command (assuming Maven is on your path)
+Once these requirements are met to start the service use one of the two methods below:
+#### Using the Executable JAR (***Easiest choice if Maven not installed***)
+For convenience I've checked the executable jar into the root of the repo [here](github-cache-0.0.1-SNAPSHOT.jar) (which is
+obviously not what would normally be done but I wasn't sure if people would have/want Maven installed).
+To run it navigate to the project's location and run
 ```
-mvn spring-boot:run -Dspring-boot.run.arguments=--server.port={port}
+java -jar github-cache-0.0.1-SNAPSHOT.jar --server.port={port}
 ```
-where `port` is the port to run the service on. There is also a method of running the executable
-jar after compiling; if that works better for you please see the final section about building the service.
+
+#### Using Maven
+If you have Maven installed or are okay with Maven being installed then navigate to the root of the project and run the command
+```
+./mvnw spring-boot:run -Dspring-boot.run.arguments=--server.port={port}
+```
+where `port` is the port to run the service on. Note that this command will search for a Maven installation
+on your path and if not found will install one in a default location so might take some time to run the first
+time.
 
 ## Testing the Service
 The service exposes several endpoints. If you happen to use  [Insomnia](https://insomnia.rest/) as an API client then
