@@ -17,7 +17,7 @@ During testing I installed and ran Redis using instructions in the [Redis Quicks
 variable (assuming a Unix system) use `export GITHUB_API_TOKEN={token}`.
 
 Once these requirements are met to start the service use one of the two methods below:
-#### Using the Executable JAR (***Easiest choice if Maven not installed***)
+### Using the Executable JAR (***Easiest choice if Maven not installed***)
 For convenience I've checked the executable jar into the root of the repo [here](github-cache-0.0.1-SNAPSHOT.jar) (which is
 obviously not what would normally be done but I wasn't sure if people would have/want Maven installed).
 To run it navigate to the project's location and run
@@ -25,7 +25,7 @@ To run it navigate to the project's location and run
 java -jar github-cache-0.0.1-SNAPSHOT.jar --server.port={port}
 ```
 
-#### Using Maven
+### Using Maven
 If you have Maven installed or are okay with Maven being installed then navigate to the root of the project and run the command
 ```
 ./mvnw spring-boot:run -Dspring-boot.run.arguments=--server.port={port}
