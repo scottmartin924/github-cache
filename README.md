@@ -32,7 +32,7 @@ If you have Maven installed or are okay with Maven being installed then navigate
 ```
 where `port` is the port to run the service on. Note that this command will search for a Maven installation
 on your path and if not found will install one in a default location so might take some time to run the first
-time.
+time. If you'd like to just build the project see the final section on Building the Jar
 
 ## Testing the Service
 The service exposes several endpoints. If you happen to use  [Insomnia](https://insomnia.rest/) as an API client then
@@ -92,9 +92,9 @@ of watchers of a repo.
 
 ## Building the jar and running (if desired)
 Build the project using maven. In particular, if you navigate to the root directory of the project and
-run the command `mvn clean package` there will an executable jar file created in the target directory
+run the command `mvn clean package` there will be an executable jar file created in the target directory
 called `github-cache-0.0.1-SNAPSHOT.jar`. To run this jar use the command
 ```
-java -jar github-cache-0.0.1-SNAPSHOT.jar --server.port={port}
+java -jar target/github-cache-0.0.1-SNAPSHOT.jar --server.port={port}
 ```
 where `port` is the port to start the service on.
