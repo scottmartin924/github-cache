@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 @Configuration
 public class WebRemoteConfiguration {
-    private static final String API_TOKEN_PROP_NAME = "GITHUB-API-TOKEN";
+    private static final String API_TOKEN_PROP_NAME = "GITHUB_API_TOKEN";
     final Pattern VARIABLE_ITERP_PATTERN = Pattern.compile(".*(\\{.*?\\})");
 
     /**

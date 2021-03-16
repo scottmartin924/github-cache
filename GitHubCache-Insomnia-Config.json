@@ -1,0 +1,290 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2021-03-16T05:26:16.576Z",
+  "__export_source": "insomnia.desktop.app:v2021.1.1",
+  "resources": [
+    {
+      "_id": "req_710f936fc4e44745ac5490d86a3ea628",
+      "parentId": "fld_ab87ce9d501e4eba9c36c61859b791bd",
+      "modified": 1615819934044,
+      "created": 1615819824216,
+      "url": "{{protocol}}://{{ _.host }}:{{ _.port }}/healthcheck",
+      "name": "Health",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1615819824216,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_ab87ce9d501e4eba9c36c61859b791bd",
+      "parentId": "wrk_02638b66f0f94ae5874c34b4e82963c6",
+      "modified": 1615870915610,
+      "created": 1615698493903,
+      "name": "GitHub Cache API",
+      "description": "",
+      "environment": {
+        "N": 15,
+        "port": 8080,
+        "host": "localhost",
+        "protocol": "http"
+      },
+      "environmentPropertyOrder": {
+        "&": [
+          "N",
+          "port",
+          "host",
+          "protocol"
+        ]
+      },
+      "metaSortKey": -1615698493903,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_02638b66f0f94ae5874c34b4e82963c6",
+      "parentId": null,
+      "modified": 1577041560483,
+      "created": 1577041560483,
+      "name": "Insomnia",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_9695a09639d745289f3a4799390c6584",
+      "parentId": "fld_ab87ce9d501e4eba9c36c61859b791bd",
+      "modified": 1615870034938,
+      "created": 1615698517873,
+      "url": "{{ _.protocol }}://{{ _.host }}:{{ _.port }}/orgs/parse-community/members",
+      "name": "Proxy",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1615698517873,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_9f057b84936940c386f47184d08f5936",
+      "parentId": "fld_ab87ce9d501e4eba9c36c61859b791bd",
+      "modified": 1615819875394,
+      "created": 1615783336681,
+      "url": "{{ _.protocol }}://{{ _.host }}:{{ _.port }}/view/top/{{ _.N }}/forks",
+      "name": "TopN Forks",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1615672584236.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_6ad8c1fb15654e28a660f989f93d0b6a",
+      "parentId": "fld_ab87ce9d501e4eba9c36c61859b791bd",
+      "modified": 1615819899381,
+      "created": 1615783393205,
+      "url": "{{protocol}}://{{ _.host }}:{{ _.port }}/view/top/{{ _.N }}/last_updated",
+      "name": "TopN Last Updated",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1615659617418.25,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_da43a7b6aa4a4f059e872bb2db385de6",
+      "parentId": "fld_ab87ce9d501e4eba9c36c61859b791bd",
+      "modified": 1615819907167,
+      "created": 1615783406263,
+      "url": "{{protocol}}://{{ _.host }}:{{ _.port }}/view/top/{{ _.N }}/open_issues",
+      "name": "TopN Issues",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1615653134009.125,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_1213cb2a979f4fb799e87f4aaa48a7be",
+      "parentId": "fld_ab87ce9d501e4eba9c36c61859b791bd",
+      "modified": 1615819913459,
+      "created": 1615783414148,
+      "url": "{{protocol}}://{{ _.host }}:{{ _.port }}/view/top/{{ _.N }}/stars",
+      "name": "TopN Stars",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1615649892304.5625,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_d2ba4484d38646c9beb47bff4793c3e7",
+      "parentId": "fld_ab87ce9d501e4eba9c36c61859b791bd",
+      "modified": 1615819926683,
+      "created": 1615783420299,
+      "url": "{{protocol}}://{{ _.host }}:{{ _.port }}/view/top/{{ _.N }}/watchers",
+      "name": "TopN Watchers",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1615648271452.2812,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_7a4a2bcf006329d286490ef4e50bef8d6c4fab9d",
+      "parentId": "wrk_02638b66f0f94ae5874c34b4e82963c6",
+      "modified": 1577042064841,
+      "created": 1577041560515,
+      "name": "Base Environment",
+      "data": {
+        "protocol": "http",
+        "triviaServiceBase": "trivia"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "protocol",
+          "triviaServiceBase"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1577041560515,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_7a4a2bcf006329d286490ef4e50bef8d6c4fab9d",
+      "parentId": "wrk_02638b66f0f94ae5874c34b4e82963c6",
+      "modified": 1577041560517,
+      "created": 1577041560517,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_a59713b47840474facc138cb7dc6fdd5",
+      "parentId": "wrk_02638b66f0f94ae5874c34b4e82963c6",
+      "modified": 1608267149769,
+      "created": 1608267149769,
+      "fileName": "Insomnia",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    },
+    {
+      "_id": "env_8d26201cca7c4dfab7029b8f4a7de996",
+      "parentId": "env_7a4a2bcf006329d286490ef4e50bef8d6c4fab9d",
+      "modified": 1613429890854,
+      "created": 1577041586213,
+      "name": "Local",
+      "data": {
+        "host": "localhost",
+        "triviaServicePort": "8080",
+        "ticketServicePort": "8081",
+        "protocol": "http",
+        "quizling-main": {
+          "protocol": "http",
+          "host": "localhost",
+          "port": "8081"
+        },
+        "quizService": {
+          "protocol": "http",
+          "host": "localhost",
+          "port": "8082"
+        }
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "host",
+          "triviaServicePort",
+          "ticketServicePort",
+          "protocol",
+          "quizling-main",
+          "quizService"
+        ],
+        "&~|quizling-main": [
+          "protocol",
+          "host",
+          "port"
+        ],
+        "&~|quizService": [
+          "protocol",
+          "host",
+          "port"
+        ]
+      },
+      "color": "#00c800",
+      "isPrivate": false,
+      "metaSortKey": 1577041586213,
+      "_type": "environment"
+    }
+  ]
+}

@@ -6,6 +6,8 @@ import com.example.githubcache.representation.HomeRepresentation;
 import com.example.githubcache.representation.MemberRepresentation;
 import com.example.githubcache.representation.OrgRepresentation;
 import com.example.githubcache.representation.RepoRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class EndpointUpdateClient {
+    private static final Logger LOG = LoggerFactory.getLogger(EndpointUpdateClient.class);
+
     private WebApiClient client;
     private EndpointTaskList taskList;
     private RouteBuilder routes;
@@ -34,6 +38,7 @@ public class EndpointUpdateClient {
      * Execute the task lists to update caches
      */
     public void execute() {
+        LOG.info("Executing scheduled task list.");
         this.taskList.executeTaskList();
     }
 

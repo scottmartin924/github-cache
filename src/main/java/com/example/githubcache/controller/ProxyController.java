@@ -33,7 +33,7 @@ public class ProxyController {
      */
     @GetMapping(value = "**")
     public ResponseEntity<?> proxyRequests(HttpServletRequest request) {
-        LOG.debug("Pulling data from cache or from remote. Request uri: {}", request.getRequestURI());
+        LOG.info("Pulling data from cache or from remote. Request uri: {}", request.getRequestURI());
         final String baseUri = request.getRequestURI();
         final StringBuilder parameters = new StringBuilder();
         request.getParameterMap()
